@@ -1,5 +1,5 @@
-const readline = require('readline');
-const process = require('process');
+import { createInterface } from 'readline';
+import { stdin, stdout, exit } from 'process';
 
 const operators = {
     '+': (a, b) => a + b,
@@ -8,15 +8,15 @@ const operators = {
     '/': (a, b) => a / b,
 };
 
-const con = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+const con = createInterface({
+    input: stdin,
+    output: stdout
 });
 
 con.setPrompt('');
 con.on('line', text => {
     if (text === '#')
-        process.exit(0);
+        exit(0);
 
     const res = text.split(/\s+/).reduce((stack, newVal) => {
         if (newVal in operators) {
