@@ -1,5 +1,9 @@
 #!/usr/bin/env escript
 
+% we need to use compile mode because I want the nice `fun fn/arity` syntax
+% within escript
+-mode(compile).
+
 parse_input(Token, Stack) ->
 	try
 		Num = list_to_integer(Token),
@@ -17,7 +21,7 @@ parse_input(Token, Stack) ->
 process_line("#") -> done;
 process_line(Input) ->
 	Tokens = string:tokens(Input, [$\s]),
-	[Head | _] = lists:foldl(fun(T, A) -> parse_input(T, A) end, [], Tokens),
+	[Head | _] = lists:foldl(fun parse_input/2, [], Tokens),
 	{ok, Head}.
 
 repl() ->
